@@ -9,7 +9,7 @@ module.directive('ngStaticIf', ['$compile', function ($compile) {
         terminal: true,
         compile: function (element, attrs) {
             return function ($scope, iElement, iAttrs) {
-                $scope.$watch(attrs.staticIf, function (value) {
+                $scope.$watch(attrs.ngStaticIf, function (value) {
                     if (!value) {
                         iElement.remove();
                         return;
