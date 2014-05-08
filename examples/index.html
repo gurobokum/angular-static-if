@@ -17,7 +17,7 @@ angular.module('example', ['angular-static-if'])
         template: '<ul>' +
             '<li ng-repeat="item in val">' +
                 '<div>{{item.title}}</div>' +
-                '<div static-if="item.children.length">' +
+                '<div ng-static-if="item.children.length">' +
                     '<tree data-val="item.children"></tree>' +
                 '</div>' +
             '</li>' +
@@ -36,7 +36,12 @@ window.addEventListener("DOMContentLoaded", function () {
             children: [
                 {
                     title: "Node2a",
-                    children: []
+                    children: [
+                        {
+                            title: "Node2aa",
+                            children: []
+                        }
+                    ]
                 }
             ]
         }
