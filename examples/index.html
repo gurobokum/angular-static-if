@@ -1,0 +1,55 @@
+<!DOCTYPE>
+<html>
+<head>
+<script type="text/javascript" src="http://yandex.st/angularjs/1.2.15/angular.js"></script>
+<script type="text/javascript" src="../angularStaticIf.js"></script>
+<script type="text/javascript">
+(function (undefined) {
+
+angular.module('example', ['angular-static-if'])
+.directive('tree', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            val: '='
+        },
+        template: '<ul>' +
+            '<li ng-repeat="item in val">' +
+                '<div>{{item.title}}</div>' +
+                '<div static-if="item.children.length">' +
+                    '<tree data-val="item.children"></tree>' +
+                '</div>' +
+            '</li>' +
+            '</ul>'
+    }
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+    var val = [
+        {
+            title: "Node1",
+            children: []
+        },
+        {
+            title: "Node2",
+            children: [
+                {
+                    title: "Node2a",
+                    children: []
+                }
+            ]
+        }
+    ];
+    document.getElementsByTagName('tree')[0].setAttribute('data-val', JSON.stringify(val));
+
+    angular.bootstrap(document, ['example']);
+});
+
+})();
+</script>
+</head>
+<body>
+<tree></tree>
+</body>
+</html>
