@@ -2,7 +2,7 @@
 
 var module = angular.module('angular-static-if', []);
 
-module.directive('staticIf', ['$compile', function ($compile) {
+module.directive('ngStaticIf', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         priority: 1000,

@@ -3,7 +3,8 @@ angular-static-if
 
 Additional attribute directive `ng-static-if`
 
-General difference between `ng-if` and `ng-static-if`, that `ng-static-if` change template
+General difference between `ng-if` and `ng-static-if`,  
+that `ng-static-if` change template  
 and you could use, for example, recursion in template without some problems
 
 For example, html for tree directive with recursion:
@@ -17,3 +18,4 @@ For example, html for tree directive with recursion:
    </li>
 </ul>
 ```
+How to use it look in examples/
