@@ -8,15 +8,22 @@ module.directive('ngStaticIf', ['$compile', function ($compile) {
         priority: 1000,
         terminal: true,
         compile: function (element, attrs) {
-            return function ($scope, iElement, iAttrs) {
+            return function ($scope, element, attrs) {
+                var content = element.contents();
+                var cachedValue = null
                 $scope.$watch(attrs.ngStaticIf, function (value) {
+                    value = !!value;
+                    if (value === cachedValue)
+                        return;
+
+                    cachedValue = value;
                     if (!value) {
-                        iElement.remove();
+                        element.empty();
                         return;
                     }
-                    var linkFn = $compile(iElement.contents());
-                    iElement.empty();
-                    iElement.append(linkFn($scope));
+                    var linkFn = $compile(content);
+                    element.empty();
+                    element.append(linkFn($scope));
                 })
             }
         }

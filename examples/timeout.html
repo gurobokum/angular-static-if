@@ -1,0 +1,98 @@
+<!DOCTYPE>
+<html>
+<head>
+<script type="text/javascript" src="http://yandex.st/angularjs/1.2.15/angular.js"></script>
+<script type="text/javascript" src="../angularStaticIf.js"></script>
+<script type="text/javascript">
+(function (undefined) {
+
+angular.module('example', ['angular-static-if'])
+.directive('tree', function () {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            val: '='
+        },
+        template: '<ul>' +
+            '<li ng-repeat="item in val">' +
+                '<div>{{item.title}}</div>' +
+                '<div ng-static-if="item.children.length">' +
+                    '<tree data-val="item.children"></tree>' +
+                '</div>' +
+            '</li>' +
+            '</ul>'
+    }
+})
+.directive('builder', function () {
+    return {
+        restrict: 'A',
+        link: function ($scope) {
+            x = $scope;
+            $scope.val = val = [
+                {
+                    title: "Node1",
+                    children: []
+                },
+                {
+                    title: "Node2",
+                    children: []
+                }
+            ];
+            setTimeout(function () {
+                console.log('-> 3sec');
+                $scope.$apply(function () {
+                    $scope.val[0].title="First Iteration";
+                    $scope.val[1].children.push({
+                            title: "Node2a",
+                            children: [
+                                {
+                                    title: "Node2aa",
+                                    children: []
+                                }
+                            ]
+                    });
+                });
+
+                setTimeout(function () {
+                    console.log('-> 6sec');
+                    $scope.$apply(function () {
+                        $scope.val[0].title="Second Iteration";
+                        val[1].children.push({
+                            title: "Node2b",
+                            children: [
+                                {
+                                    title: "Node2ba",
+                                    children: []
+                                },
+                                {
+                                    title: "Node2bb",
+                                    children: [
+                                        {
+                                            title: "Node2bba",
+                                            children: []
+                                        }
+                                    ]
+                                }
+                            ]
+                        });
+                    });
+                }, 3000);
+            }, 3000);
+        }
+    }
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+    angular.bootstrap(document, ['example']);
+});
+
+})();
+</script>
+</head>
+<body>
+<div builder>
+    <tree data-val="val"></tree>
+</div>
+</body>
+</html>
